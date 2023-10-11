@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
-    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -13,36 +13,60 @@
             <a href="merchant.html">Merchant</a>
         </div>
     </header>
-    
-    <main>
-        <section class="add-product-form">
+    <div class="main-content">
+        <div class ="wrapper">
             <h2>Add Product</h2>
-            <form id="product-form">
-                <div class="form-group">
-                    <label for="product-image">Product Image</label>
-                    <input type="file" id="product-image" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label for="product-name">Product Name</label>
-                    <input type="text" id="product-name" name="product-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-description">Product Description</label>
-                    <textarea id="product-description" name="product-description" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="product-cost">Product Cost</label>
-                    <input type="number" id="product-cost" name="product-cost" required>
-                </div>
-                <div class="form-group">
-                    <label for="product-quantity">Product Quantity</label>
-                    <input type="number" id="product-quantity" name="product-quantity" required>
-                </div>
-                <button type="submit">Add Product</button>
+
+            <br><br>
+            <form action="" method="POST" enctype="multiport/form-data">
+            <table class="tbl_product">
+                <tr>
+                    <td>ProductImage:</td>
+                    <td><label for="product-image">Product Image</label></td>
+                    <td><input type="file" id="Productimage" accept="image/*" name="Productimage"> </td>
+
+                </tr>
+
+                <tr>
+                    <td>ProductName</td>
+                    <td><input type="text" id="ProductName" name="ProductName" required></td>
+                </tr>
+
+                <tr>
+                    <td>ProductDescription</td>
+                    <td>
+                        <textarea id="ProductDescription" cols="30" row="15" name="ProductDescription" required></textarea>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>ProductCost</td>
+                    <td><input type="number" id="ProductCost" name="ProductCost" required></td>
+                </tr>
+
+                <tr>
+                    <td>ProductQuantity</td>
+                    <td><input type="number" id="ProductQuantity" name="ProductQuantity" required></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="submit" value="Add Product" class="btn-secondary">
+                </td>
+                </tr>
+
+
+
+            </table>
+
+
             </form>
-        </section>
-    </main>
-    
+            <iframe src="Add_Product.php" frameborder="0"></iframe>
+
+        </div>
+    </div>
+  
     <footer>
         <div class="social-links">
             <a href="#">Facebook</a>
