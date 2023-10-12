@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <link href="TheGetaway/style.css" rel="stylesheet">
+    <link href="TheGetawayRegiCSS/style.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -22,35 +22,40 @@
                 <h1 class="text-white mb-4">Merchant Registration</h1>
                 <div class="form-floating">
                     <label for="name">Full Name</label>
-                    <input type="text" class="form-control bg-transparent" id="name" placeholder="Your Full Name">
+                    <input type="text" class="form-control bg-transparent" id="MUsername" name = "MUsername" placeholder="Your Full Name">
                 </div>
                 <div class="form-floating">
                     <label for="email">Your Email</label>
-                    <input type="email" class="form-control bg-transparent" id="email" placeholder="Your Email">
+                    <input type="email" class="form-control bg-transparent" id="MEmail" name ="MEmail" placeholder="Your Email">
                 </div>
                 <div class="form-floating">
                     <label for="phone">Your Contact info</label>
-                    <input type="text" class="form-control bg-transparent" id="phone" placeholder="Your Phone Number">
+                    <input type="text" class="form-control bg-transparent" id="MCNumber" name ="MCNumber" placeholder="Your Phone Number">
                 </div>
                 <div class="form-floating">
                     <label for="message">Brief Company description</label>
-                    <textarea class="form-control bg-transparent" placeholder="Brief Company description" id="message" style="height: 100px"></textarea>
+                    <textarea class="form-control bg-transparent" placeholder="Brief Company description" id="Comp_Desc" name ="Comp_Desc" style="height: 100px"></textarea>
                 </div>
                 <div class="form-floating">
                     <label for="phone">File Title</label>
-                    <input type="text" class="form-control bg-transparent" id="FileName" placeholder="Your File Title">
+                    <input type="text" class="form-control bg-transparent" id="FileTitle" name ="FileTitle" placeholder="Your File Title">
                 </div>
                 <div class="form-floating">
-                    <label for="avatar">Upload Documents</label>
-                    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"/>
+                    <label for="avatar">Upload Licenses</label>
+                    <input type="file" id="License" name="License" accept="image/png, image/jpeg"/>
+                </div>
+                <div class="form-floating">
+                    <label for="avatar">Upload Testimonials</label>
+                    <input type="file" id="Testimonials" name="Testimonials" accept="image/png, image/jpeg"/>
                 </div>
                 <div class="form-floating">
                     <label for="message">File Description</label>
-                    <textarea class="form-control bg-transparent" placeholder="File Description" id="message" style="height: 100px"></textarea>
+                    <textarea class="form-control bg-transparent" placeholder="File Description" id="FileDesc" name ="FileDesc" style="height: 100px"></textarea>
                 </div>
-                <button class="btn btn-outline-light w-100 py-3" type="submit">Register</button>
+                <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit">Register</button>
                 <p class="text-center mt-3">
                     Are you a customer? <a href="#" id="toggle-customer-registration">Register Customer</a>
+                    <br>Already have an account? <a href="TheGetawayLogin.html" id="Login">Login</a>
                 </p>
             </form>
             <!-- Customer Registration Form -->
@@ -58,29 +63,29 @@
                 <h1 class="text-white mb-4">Customer Registration</h1>
                 <div class="form-floating">
                     <label for="customer-username">Username</label>
-                    <input type="text" class="form-control bg-transparent" id="customer-username" placeholder="Username">
+                    <input type="text" class="form-control bg-transparent" id="CUsername" name="CUsername" placeholder="Username">
                 </div>
                 <div class="form-floating">
                     <label for="customer-email">Email</label>
-                    <input type="email" class="form-control bg-transparent" id="customer-email" placeholder="Your Email">
+                    <input type="email" class="form-control bg-transparent" id="CEmail" name="CEmail" placeholder="Your Email">
                 </div>
                 <div class="form-floating">
                     <label for="customer-password">Password</label>
-                    <input type="password" class="form-control bg-transparent" id="customer-password" placeholder="Password">
+                    <input type="password" class="form-control bg-transparent" id="CPassword" name="CPassword" placeholder="Password">
                 </div>
                 <div class="form-floating">
                     <label for="customer-contact-number">Contact Number</label>
-                    <input type="text" class="form-control bg-transparent" id="customer-contact-number" placeholder="Contact Number">
+                    <input type="text" class="form-control bg-transparent" id="CC_Number" name="CC_Number" placeholder="Contact Number">
                 </div>
-                <button class="btn btn-outline-light w-100 py-3" type="submit">Register</button>
+                <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit1">Register</button>
                 <p class="text-center mt-3">
                     Are you a Merchant? <a href="#" id="toggle-registration">Register Merchant</a>
+                    <br>Already have an account? <a href="TheGetawayLogin.html" id="Login">Login</a>
                 </p>
             </form>
         </div>
     </div>
     <script>
-
 document.getElementById("toggle-customer-registration").addEventListener("click", function () {
     document.getElementById("registration-form").style.display = "none";
     document.getElementById("customer-registration-form").style.display = "block";
@@ -100,3 +105,71 @@ document.getElementById("toggle-registration").addEventListener("click", functio
     </footer>
 </body>
 </html>
+
+<?php
+if(isset($_POST["submit1"])) {
+    // Check if the keys exist in the $_POST array
+    if(isset($_POST['CUsername']) && isset($_POST['CPassword']) && isset($_POST['CEmail']) && isset($_POST['CC_Number'])) {
+        $username = $_POST['CUsername'];
+        $password = $_POST['CPassword'];
+        $email = $_POST['CEmail'];
+        $contact = $_POST['CC_Number'];
+
+        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); // Include the database name here
+
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $sql = "INSERT INTO customer (CUsername, CPassword, CEmail, CC_Number)
+                VALUES ('$username', '$password', '$email', $contact)";
+
+        $res = mysqli_query($conn, $sql);
+
+        if($res === TRUE) { // Use === for strict comparison
+            echo "Database updated";
+        } else {
+            echo "Insertion failed: " . mysqli_error($conn);
+        }
+
+        mysqli_close($conn);
+    } else {
+        echo "One or more POST values are missing.";
+    }
+}
+
+if (isset($_POST["submit"])) {
+    // Check if the keys exist in the $_POST array
+    if (isset($_POST['MUsername']) && isset($_POST['MEmail']) && isset($_POST['MCNumber']) && isset($_POST['Comp_Desc']) && isset($_POST['FileTitle']) && isset($_POST['License']) && isset($_POST['Testimonials']) && isset($_POST['FileDesc'])) {
+        $Musername = $_POST['MUsername'];
+        $Memail = $_POST['MEmail'];
+        $contactNum = $_POST['MCNumber'];
+        $CompDesc = $_POST['Comp_Desc'];
+        $FileTitle = $_POST['FileTitle'];
+        $License = $_POST['License'];
+        $Testimonials = $_POST['Testimonials'];
+        $FileDesc = $_POST['FileDesc'];
+        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); // Include the database name here
+
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        // Enclose string values in single quotes
+        $sql = "INSERT INTO merchant (MUsername, MEmail, MCNumber, Comp_Desc, FileTitle, License, Testimonials, FileDesc)
+                VALUES ('$Musername', '$Memail', '$contactNum', '$CompDesc', '$FileTitle', '$License', '$Testimonials', '$FileDesc')";
+
+        $res = mysqli_query($conn, $sql);
+
+        if ($res === TRUE) { // Use === for strict comparison
+            echo "Database updated";
+        } else {
+            echo "Insertion failed: " . mysqli_error($conn);
+        }
+
+        mysqli_close($conn);
+    } else {
+        echo "One or more POST values are missing.";
+    }
+}
+?>
