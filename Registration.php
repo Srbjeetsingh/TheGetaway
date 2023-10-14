@@ -155,18 +155,26 @@ if (isset($_POST["submit"])) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
-        // Enclose string values in single quotes
-        $sql = "INSERT INTO merchant (MUsername, MEmail, MCNumber, Comp_Desc, FileTitle, License, Testimonials, FileDesc)
-                VALUES ('$Musername', '$Memail', '$contactNum', '$CompDesc', '$FileTitle', '$License', '$Testimonials', '$FileDesc')";
-
-        $res = mysqli_query($conn, $sql);
-
-        if ($res === TRUE) { // Use === for strict comparison
-            echo "Database updated";
+        $duplicateCheckQuery = "SELECT * FROM merchant WHERE MUsername='$Musername' OR MCNumber='$contactNum' OR MEmail='$Memail'";
+        $duplicateCheckResult = $conn->query($duplicateCheckQuery);
+        if ($duplicateCheckResult->num_rows > 0) {
+         // Duplicate entry found, display error message
+            echo "<script>alert('You have entered your Username, Email or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
         } else {
-            echo "Insertion failed: " . mysqli_error($conn);
-        }
 
+                // Enclose string values in single quotes
+                $sql = "INSERT INTO merchant (MUsername, MEmail, MCNumber, Comp_Desc, FileTitle, License, Testimonials, FileDesc, MStatus)
+                VALUES ('$Musername', '$Memail', '$contactNum', '$CompDesc', '$FileTitle', '$License', '$Testimonials', '$FileDesc', 'PENDING')";
+
+                $res = mysqli_query($conn, $sql);
+
+                if ($res === TRUE) { // Use === for strict comparison
+                 echo "Database updated";
+                } else {
+                echo "Insertion failed: " . mysqli_error($conn);
+                }
+        }
+        
         mysqli_close($conn);
     } else {
         echo "One or more POST values are missing.";
