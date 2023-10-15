@@ -1,0 +1,218 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url('malaysia-tour-package-bg.jpg'); /* Replace 'your-image-url.jpg' with the URL or path to your image */
+    background-size: cover; /* Adjust the background size to cover the entire viewport */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    color: #fff; /* Text color for better contrast with the background image */
+    text-align: center; /* Center-align text content */
+    font-family: Arial, sans-serif; /* Choose your preferred font family */
+    padding: 20px; /* Add some padding to the body content */
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px; /* Limit the maximum width of the container */
+    margin: 0 auto; /* Center the container */
+    display: flex;
+    justify-content: space-between; /* Horizontally space out the elements */
+    align-items: center;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+/* Reset default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the navigation container */
+nav {
+    background-color: #333; /* Background color */
+    color: #fff; /* Text color */
+    font-family: Arial, sans-serif; /* Font family */
+    padding: 10px 0; /* Add some padding to the top and bottom */
+}
+
+
+/* Style the logo */
+h1 a {
+    color: #fff; /* Text color for the logo */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 24px; /* Adjust the font size */
+}
+
+/* Style the navigation links */
+ul {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Make the list items horizontal */
+}
+
+li {
+    margin-right: 20px; /* Add some spacing between the list items */
+}
+
+li a {
+    color: #fff; /* Text color for the links */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 18px; /* Adjust the font size */
+    transition: color 0.2s; /* Add a smooth color transition */
+}
+
+/* Change link color on hover */
+li a:hover {
+    color: #ff6600; /* Change to a different color on hover */
+}
+
+.product-categories {
+    background-color: #f4f4f4; /* Background color */
+    padding: 20px 0; /* Add padding to the section */
+}
+
+.container {
+    max-width: 1200px; /* Limit the maximum width of the container */
+    margin: 0 auto; /* Center the container */
+    display: flex;
+    flex-wrap: wrap; /* Allow categories to wrap to the next line on small screens */
+    justify-content: space-between; /* Horizontally space out the categories */
+}
+
+.category {
+    text-align: center; /* Center align the content */
+    margin-bottom: 20px; /* Add spacing between categories */
+}
+
+/* Style the category images */
+.category img {
+    max-width: 100%; /* Ensure images fit within their container */
+}
+
+/* Style the category titles */
+.category h3 {
+    font-size: 18px; /* Adjust the font size */
+    margin-top: 10px; /* Add spacing above the title */
+}
+
+/* Style links within categories */
+.category a {
+    text-decoration: none; /* Remove underlines from links */
+    color: #333; /* Text color for links */
+}
+
+/* Change link color on hover */
+.category a:hover {
+    color: #ff6600; /* Change to a different color on hover */
+}
+.p2{
+    color: #0b0b0b;
+}
+
+/* Hero Section Styles */
+.main {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 100vh; /* Set the main content height to the viewport height */
+}
+.hero {
+    background-image: url('hero-background.jpg');
+    background-size: cover;
+    color: #9fb7be;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+}
+
+/* Product Styles */
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    background-color: #666;
+}
+
+.product {
+    background-color: #efe7e7;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.product img {
+    max-width: 100%;
+}
+
+.product h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.product p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.product .price {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.product .btn {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.product .btn:hover {
+    background-color: #555;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333; /* Background color */
+    color: #fff; /* Text color */
+    text-align: center; /* Center-align text content */
+    padding: 20px 0; /* Add some padding to the footer */
+}
+
+/* Style the footer links */
+footer a {
+    text-decoration: none; /* Remove underlines from links */
+    color: #fff; /* Text color for links */
+    text-align: right;
+    margin: 0 130px; /* Add spacing between links */
+    font-size: 12px; /* Adjust the font size */
+    transition: color 0.2s; /* Add a smooth color transition on hover */
+}
+
+/* Change link color on hover */
+footer a:hover {
+    color: #ff6600; /* Change to a different color on hover */
+}
+
+/* Style the copyright text */
+footer p {
+    font-size: 14px; /* Adjust the font size */
+}
