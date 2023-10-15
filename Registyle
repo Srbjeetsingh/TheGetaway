@@ -1,5 +1,5 @@
 body {
-    background-image: url('C:\\xampp\\htdocs\\TheGetaway\\images\\BgBeach.jpg');
+    background-image: url('BgBeach.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,6 +16,7 @@ header {
     text-align: center;
     padding: 20px;
     margin: 0; 
+    margin-bottom: 100px;
 }
 
 .container {
@@ -74,6 +75,7 @@ header {
             text-align: center;
             padding: 10px;
             margin: 0;
+            margin-top: 100px;
         }
         
         .social-links a {

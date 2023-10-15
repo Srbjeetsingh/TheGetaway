@@ -1,3 +1,84 @@
+<?php
+if(isset($_POST["submit1"])) {
+    if(isset($_POST['CUsername']) && isset($_POST['CPassword']) && isset($_POST['CEmail']) && isset($_POST['CC_Number'])) {
+        $username = $_POST['CUsername'];
+        $password = $_POST['CPassword'];
+        $email = $_POST['CEmail'];
+        $contact = $_POST['CC_Number'];
+
+        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); 
+
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $DupeCheck = "SELECT * FROM customer WHERE CUsername='$username' OR CPassword='$password' OR CEmail='$email'";
+        $DupeResult = $conn->query($DupeCheck);
+        if ($DupeResult->num_rows > 0) {
+            echo "<script>alert('You have entered your Username, Email or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
+        } else {
+
+                $sql = "INSERT INTO customer (CUsername, CPassword, CEmail, CC_Number)
+                VALUES ('$username', '$password', '$email', $contact)";
+                $res = mysqli_query($conn, $sql);
+
+                if ($res === TRUE) { 
+                 echo "Database updated";
+                 header("Location: TheGetawayLogin.php");
+                 exit(); 
+                } else {
+                echo "Insertion failed: " . mysqli_error($conn);
+                }
+        }
+
+        mysqli_close($conn);
+    } else {
+        echo "One or more POST values are missing.";
+    }
+}
+
+if (isset($_POST["submit"])) {
+    if (isset($_POST['MUsername']) && isset($_POST['MEmail']) && isset($_POST['MCNumber']) && isset($_POST['Comp_Desc']) && isset($_POST['FileTitle']) && isset($_POST['License']) && isset($_POST['Testimonials']) && isset($_POST['FileDesc'])) {
+        $Musername = $_POST['MUsername'];
+        $Memail = $_POST['MEmail'];
+        $contactNum = $_POST['MCNumber'];
+        $CompDesc = $_POST['Comp_Desc'];
+        $FileTitle = $_POST['FileTitle'];
+        $License = $_POST['License'];
+        $Testimonials = $_POST['Testimonials'];
+        $FileDesc = $_POST['FileDesc'];
+        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); 
+
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $CheckQuery = "SELECT * FROM merchant WHERE MUsername='$Musername' OR MCNumber='$contactNum' OR MEmail='$Memail'";
+        $CheckResult = $conn->query($CheckQuery);
+        if ($CheckResult->num_rows > 0) {
+            echo "<script>alert('You have entered your Username, Email or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
+        } else {
+
+                $sql = "INSERT INTO merchant (MUsername, MEmail, MCNumber, Comp_Desc, FileTitle, License, Testimonials, FileDesc, MStatus)
+                VALUES ('$Musername', '$Memail', '$contactNum', '$CompDesc', '$FileTitle', '$License', '$Testimonials', '$FileDesc', 'PENDING')";
+
+                $res = mysqli_query($conn, $sql);
+
+                if ($res === TRUE) { 
+                 echo "Database updated";
+                 header("Location: TheGetawayLogin.php");
+                 exit(); 
+                } else {
+                echo "Insertion failed: " . mysqli_error($conn);
+                }
+        }
+        mysqli_close($conn);
+    } else {
+        echo "One or more POST values are missing.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +87,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <link href="TheGetawayRegiCSS/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
     <header>
         <h1>Login/Registration</h1>
@@ -55,7 +137,7 @@
                 <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit">Register</button>
                 <p class="text-center mt-3">
                     Are you a customer? <a href="#" id="toggle-customer-registration">Register Customer</a>
-                    <br>Already have an account? <a href="TheGetawayLogin.html" id="Login">Login</a>
+                    <br>Already have an account? <a href="TheGetawayLogin.php" id="Login">Login</a>
                 </p>
             </form>
             <!-- Customer Registration Form -->
@@ -80,7 +162,7 @@
                 <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit1">Register</button>
                 <p class="text-center mt-3">
                     Are you a Merchant? <a href="#" id="toggle-registration">Register Merchant</a>
-                    <br>Already have an account? <a href="TheGetawayLogin.html" id="Login">Login</a>
+                    <br>Already have an account? <a href="TheGetawayLogin.php" id="Login">Login</a>
                 </p>
             </form>
         </div>
@@ -106,78 +188,3 @@ document.getElementById("toggle-registration").addEventListener("click", functio
 </body>
 </html>
 
-<?php
-if(isset($_POST["submit1"])) {
-    // Check if the keys exist in the $_POST array
-    if(isset($_POST['CUsername']) && isset($_POST['CPassword']) && isset($_POST['CEmail']) && isset($_POST['CC_Number'])) {
-        $username = $_POST['CUsername'];
-        $password = $_POST['CPassword'];
-        $email = $_POST['CEmail'];
-        $contact = $_POST['CC_Number'];
-
-        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); // Include the database name here
-
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-
-        $sql = "INSERT INTO customer (CUsername, CPassword, CEmail, CC_Number)
-                VALUES ('$username', '$password', '$email', $contact)";
-
-        $res = mysqli_query($conn, $sql);
-
-        if($res === TRUE) { // Use === for strict comparison
-            echo "Database updated";
-        } else {
-            echo "Insertion failed: " . mysqli_error($conn);
-        }
-
-        mysqli_close($conn);
-    } else {
-        echo "One or more POST values are missing.";
-    }
-}
-
-if (isset($_POST["submit"])) {
-    // Check if the keys exist in the $_POST array
-    if (isset($_POST['MUsername']) && isset($_POST['MEmail']) && isset($_POST['MCNumber']) && isset($_POST['Comp_Desc']) && isset($_POST['FileTitle']) && isset($_POST['License']) && isset($_POST['Testimonials']) && isset($_POST['FileDesc'])) {
-        $Musername = $_POST['MUsername'];
-        $Memail = $_POST['MEmail'];
-        $contactNum = $_POST['MCNumber'];
-        $CompDesc = $_POST['Comp_Desc'];
-        $FileTitle = $_POST['FileTitle'];
-        $License = $_POST['License'];
-        $Testimonials = $_POST['Testimonials'];
-        $FileDesc = $_POST['FileDesc'];
-        $conn = mysqli_connect('localhost', 'root', '', 'thegetaway'); // Include the database name here
-
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-
-        $duplicateCheckQuery = "SELECT * FROM merchant WHERE MUsername='$Musername' OR MCNumber='$contactNum' OR MEmail='$Memail'";
-        $duplicateCheckResult = $conn->query($duplicateCheckQuery);
-        if ($duplicateCheckResult->num_rows > 0) {
-         // Duplicate entry found, display error message
-            echo "<script>alert('You have entered your Username, Email or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
-        } else {
-
-                // Enclose string values in single quotes
-                $sql = "INSERT INTO merchant (MUsername, MEmail, MCNumber, Comp_Desc, FileTitle, License, Testimonials, FileDesc, MStatus)
-                VALUES ('$Musername', '$Memail', '$contactNum', '$CompDesc', '$FileTitle', '$License', '$Testimonials', '$FileDesc', 'PENDING')";
-
-                $res = mysqli_query($conn, $sql);
-
-                if ($res === TRUE) { // Use === for strict comparison
-                 echo "Database updated";
-                } else {
-                echo "Insertion failed: " . mysqli_error($conn);
-                }
-        }
-        
-        mysqli_close($conn);
-    } else {
-        echo "One or more POST values are missing.";
-    }
-}
-?>
