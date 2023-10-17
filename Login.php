@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        $redirect_page = "ProductTest.html";
+        $redirect_page = "Dashboard.html";
     }
 
     $query = "SELECT * FROM tourism_ministry_officer WHERE TOUsername = ? AND TOPassword = ?";
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        $redirect_page = "TourismTest.html";
+        $redirect_page = "Dashboard.html";
     }
 
     $query = "SELECT * FROM merchant WHERE MUsername = ? AND MEmail = ?";
