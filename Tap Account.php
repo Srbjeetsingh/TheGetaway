@@ -1,3 +1,32 @@
+<?php
+function getMerchantStatus($merchantID) {
+    // Replace this with your database connection code
+    $servername = "localhost:3310";
+    $username = "root";
+    $password = "";
+    $dbname = "thegetaway";
+
+    // Create a connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch and return the MStatus for the specified merchant ID
+    $query = "SELECT MStatus FROM merchant WHERE MerchantID = $merchantID";
+    $result = $conn->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $status = $row["MStatus"];
+    } else {
+        $status = "Pending";
+    }
+    
+    return $status;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,7 +141,7 @@
           <div id="sidebar">
             <img src="Officer_Male-removebg-preview.png" alt="Click Me">
               <ul>
-                  <li><a href="#">Inbox</a></li>
+                  <li><a href="#">Inbox(10)</a></li>
                   <li><a href="Tap Account.php">Tap Merchant Account</a></li>
                   <li><a href="MenuLink.php">Menu Link</a></li>
                   <li><a href="#">Sent</a></li>
@@ -130,11 +159,15 @@
     <div class="merchant-card" onclick="showMerchant(6)">
         <h2>Merchant 6</h2>
         <p>Merchant ID: 6</p>
+        <p>Status:       </p>
+        <?php echo getMerchantStatus(6); ?></p>
         <!-- Add other merchant information here -->
     </div>
     <div class="merchant-card" onclick="showMerchant(7)">
         <h2>Merchant 7</h2>
         <p>Merchant ID: 7</p>
+        <p>Status:       </p>
+        <?php echo getMerchantStatus(6); ?></p>
         <!-- Add other merchant information here -->
     </div>
     <!-- Add more merchant cards for other IDs as needed -->
