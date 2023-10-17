@@ -46,7 +46,7 @@
 </html>
 
 <?php
-$host = "localhost";
+$host = "localhost:3310";
 $username = "root";
 $password = "";
 $database = "thegetaway";
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $redirect_page = ""; 
 
-    $query = "SELECT * FROM customer WHERE CUsername = ? AND CPassword = ?";
+    $query = "SELECT * FROM tourism_ministry_officer WHERE TOUsername = ? AND TOPassword = ?";
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param("ss", $username1, $password1);
     $stmt->execute();
