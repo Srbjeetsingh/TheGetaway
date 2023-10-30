@@ -1,0 +1,8 @@
+Receipt Date: 2023-10-30 18:07:48
+Product Name: hotelKL
+Customer Name: Viki
+Product Cost: RM 350.00
+Quantity: 2
+Total: RM 700
+Payment Method: Card
+Product Image: 4_resort5.png
