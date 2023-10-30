@@ -6,3 +6,5 @@ Quantity: 2
 Total: RM 700
 Payment Method: Card
 Product Image: 4_resort5.png
+
+*ADDED VALUE INTO PHPMYADMIN FOR CName BASED ON CustID
