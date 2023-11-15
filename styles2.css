@@ -1,0 +1,98 @@
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styling for the header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.category-buttons {
+    margin-top: 10px;
+}
+
+.category-buttons a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 10px;
+}
+
+form {
+    background-color: #fff;
+    border-radius: 10px;
+    border-width: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+table.tbl_product {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.tbl_product tr {
+    border: 1px solid #ccc;
+}
+
+table.tbl_product td {
+    padding: 10px;
+}
+
+table.tbl_product label {
+    font-weight: bold;
+}
+
+table.tbl_product input[type="text"],
+table.tbl_product input[type="file"],
+table.tbl_product textarea,
+table.tbl_product input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+table.tbl_product input[type="file"] {
+    margin-top: 10px;
+}
+
+table.tbl_product input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+table.tbl_product input[type="submit"]:hover {
+    background-color: #5aa7e0; /* Lighter Blue */
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 10px;
+}
