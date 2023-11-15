@@ -1,16 +1,25 @@
 <?php
+session_start();
 $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
+$userInfo = "";
+ 
+if (isset($_SESSION['customer_id'])) {
+    $userInfo = "Customer ID: " . $_SESSION['customer_id'];
+} else {
+    $userInfo = "No user is currently logged in.";
+}
+ 
+echo $userInfo;
+ 
 $db_select = mysqli_select_db($conn, 'manage_tourism_product');
 if (!$db_select) {
     die("Database selection failed: " . mysqli_error($conn));
 }
-
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,27 +39,27 @@ if (!$db_select) {
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">Login</a></li> <!-- Add a Login button -->
                 <li><a href="#">Register</a></li> <!-- Add a Registration button -->
+                <li><a href="#">Previous Buys</a></li>
             </ul>
         </div>
     </nav>
 </header>
-
+ 
     <main>
         <section class="hero">
             <div class="container">
                 <h2>Welcome to TheGetAway</h2>
             </div>
         </section>
-
+        <p2>Our Featured Packages.</p2>
+ 
         <section class="product-categories">
-            <p2>Our Featured Packages.</p2>
             <div class="container">
                 <div class="container">
                     <?php
                     $sql = "SELECT*FROM tbl_product LIMIT 5";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
-
                     if ($count > 0) {
                         while ($row = mysqli_fetch_assoc($res)) {
                             $ProductID = $row['ProductID'];
@@ -66,30 +75,34 @@ if (!$db_select) {
                                     echo "<div class='error'>Image not available.</div>";
                                 } else {
                                     ?>
-                                    <?php echo '<img src="' . $Productimage . '" alt="Productimage" width="100" height="100"><br>';?>
                                     <?php echo '<img src="images/' . $Productimage . '" alt="Productimage" width="100" height="100"><br>';?>
                                     <?php
-                                    
+                                   
                                 }
                                 ?>
                                 <h3><?php echo $ProductName; ?></h3>
                                 <p><?php echo $ProductDescription; ?></p>
                                 <span class="price">$<?php echo $ProductCost; ?></span>
+                                <br>
+                                   <a href="reviewTest.php?ProductID=<?php echo $ProductID; ?>" class="btn-primary">View Details</a>
+                                   <a href="productReview.php?ProductID=<?php  echo $ProductID; ?>" class="btn-primary">Review</a>
+                                   
+           
                             </div>
                             <?php
                         }
                     } else {
                         echo "<div class='error'>Products not available.</div>";
                     }
-                
-                    
+               
+                   
                     ?>
-    
+   
             </div>
         </section>
-
+ 
     </main>
-
+ 
     <footer>
         <div class="container">
             <p>&copy; 2023 TheGetAway</p>
