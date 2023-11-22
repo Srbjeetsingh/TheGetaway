@@ -1,0 +1,9 @@
+Receipt Date and Time: 2023-11-22 18:31:35
+Purchase Date: 2023-11-05
+Product Name: hotelKL
+Customer Name: cust
+Product Cost: RM 350
+Quantity: 4
+Total Cost: RM 1400
+Payment Method: Credit Card
+Product Image: 4_resort5.png
