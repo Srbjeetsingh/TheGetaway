@@ -12,7 +12,11 @@
     <header>
         <h1>Login/Registration</h1>
         <div class="category-buttons">
+<<<<<<< Updated upstream
             <a href="Homepage.html">Homepage</a>
+=======
+            <a href="Home.php">Homepage</a>
+>>>>>>> Stashed changes
         </div>
     </header>
     <div class="container">
@@ -72,6 +76,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
+<<<<<<< Updated upstream
+=======
+        $row = $result->fetch_assoc();
+        if (isset($row['CustomerID'])) {
+            $_SESSION['customer_id'] = $row['CustomerID'];
+        } elseif (isset($row['TourOfficerID'])) {
+            $_SESSION['tourism_officer_id'] = $row['TourOfficerID'];
+        } elseif (isset($row['MEmail'])) {
+            $_SESSION['merchant_email'] = $row['MerchantID'];
+        }
+    
+>>>>>>> Stashed changes
         $redirect_page = "productHomepage.php";
     }
 
@@ -82,7 +98,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
+<<<<<<< Updated upstream
         $redirect_page = "Dashboard.html";
+=======
+        $row = $result->fetch_assoc();
+        if (isset($row['CustomerID'])) {
+            $_SESSION['customer_id'] = $row['CustomerID'];
+        } elseif (isset($row['TourOfficerID'])) {
+            $_SESSION['tourism_officer_id'] = $row['TourOfficerID'];
+        } elseif (isset($row['MEmail'])) {
+            $_SESSION['merchant_email'] = $row['MerchantID'];
+        }
+    
+        $redirect_page = "Dashboard.php";
+>>>>>>> Stashed changes
     }
 
     $query = "SELECT * FROM tbl_merchant WHERE MUsername = ? AND MPassword = ?";
@@ -93,6 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
+<<<<<<< Updated upstream
 
         if (isset($_SESSION['password_changed']) && $_SESSION['password_changed'] === true) {
             $redirect_page = "merchant.php";
@@ -100,6 +130,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $_SESSION['merchant_email'] = $row['MEmail'];
             $redirect_page = "UpdatePassword.php";
+=======
+        if ($row['PassCheck'] == 0) {
+            // Redirect to password reset page
+            $_SESSION['merchant_id'] = $row['MerchantID'];
+            header("Location: UpdatePassword.php");
+            exit();
+        } else {
+            // Password reset not required, proceed to the main page
+            $_SESSION['merchant_id'] = $row['MerchantID'];
+            header("Location: merchant.php");
+            exit();
+>>>>>>> Stashed changes
         }
     }
 
@@ -114,4 +156,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $mysqli->close();
+<<<<<<< Updated upstream
 ?>
+=======
+?>
+>>>>>>> Stashed changes

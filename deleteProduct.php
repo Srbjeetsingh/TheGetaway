@@ -9,29 +9,26 @@ if (isset($_GET['ProductID'])) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // Get the image file name to be deleted
-    $sql = "SELECT Productimage FROM tbl_product WHERE ProductID = $ProductID";
-    $result = mysqli_query($conn, $sql);
+    // Get the product data to be moved to the backup table
+    $selectSql = "SELECT * FROM tbl_product WHERE ProductID = $ProductID";
+    $result = mysqli_query($conn, $selectSql);
 
     if ($result) {
         $row = mysqli_fetch_assoc($result);
-        $Productimage = $row['Productimage'];
-        mysqli_free_result($result);
 
-        // Delete the product data from the database
-        $deleteSql = "DELETE FROM tbl_product WHERE ProductID = $ProductID";
-        if (mysqli_query($conn, $deleteSql)) {
-            // Delete the product image file if it exists
-            if (!empty($Productimage)) {
-                $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/' . $Productimage;
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
+        // Insert the product data into the backup table
+        $backupSql = "INSERT INTO tbl_backup_product (BProductID, BProductimage, BProductName, BProductDescription, BProductCost, BProductQuantity) 
+                      VALUES ('" . $row['ProductID'] . "', '" . $row['Productimage'] . "', '" . $row['ProductName'] . "', '" . $row['ProductDescription'] . "', '" . $row['ProductCost'] . "','" . $row['ProductQuantity'] . "')";
+        if (mysqli_query($conn, $backupSql)) {
+            // Now, delete the product from the main table
+            $deleteSql = "DELETE FROM tbl_product WHERE ProductID = $ProductID";
+            if (mysqli_query($conn, $deleteSql)) {
+                $_SESSION['delete'] = "<div class='success'>Product Deleted Successfully.</div>";
+            } else {
+                $_SESSION['delete'] = "<div class='error'>Failed to Delete Product from the Main Table.</div>";
             }
-
-            $_SESSION['delete'] = "<div class='success'>Product Deleted Successfully.</div>";
         } else {
-            $_SESSION['delete'] = "<div class='error'>Failed to Delete Product.</div>";
+            $_SESSION['delete'] = "<div class='error'>Failed to Move Product to Backup Table.</div>";
         }
     } else {
         $_SESSION['delete'] = "<div class='error'>Product not found.</div>";

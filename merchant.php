@@ -12,12 +12,28 @@
         <div class="category-buttons">
             <a href="AddProduct.php">Add Product</a>
             <a href="TheGetawayLogin.php">Log Out</a>
+<<<<<<< Updated upstream
+=======
+            <a href="data2.php">View Analytics</a>
+>>>>>>> Stashed changes
         </div>
     </header>
 
     <?php
     session_start(); // Start the session
+     // Check if a customer is logged in
+     $userInfo = "";
 
+     if (isset($_SESSION['merchant_id'])) {
+         $userInfo = "Merchant ID: " . $_SESSION['merchant_id'];
+     } else {
+         $userInfo = "No user is currently logged in.";
+     }
+     
+     echo $userInfo;
+
+     $merchantID = $_SESSION['merchant_id'];
+     
     if (isset($_SESSION['add'])) {
         echo $_SESSION['add'];
         unset($_SESSION['add']);
@@ -47,7 +63,7 @@
                     <th>ProductImage</th>
                     <th>ProductName</th>
                     <th>ProductDescription</th>
-                    <th>ProductCost</th>
+                    <th>ProductCost($)</th>
                     <th>ProductQuantity</th>
                     <th>Edits</th>
                 </tr>
@@ -57,7 +73,7 @@
                     die("Connection failed: " . mysqli_connect_error());
                 }
 
-                $sql = "SELECT * FROM tbl_product";
+                $sql = "SELECT * FROM tbl_product WHERE fk_merchantID = $merchantID";
                 $res = mysqli_query($conn, $sql);
                 if (!$res) {
                     die("Query failed: " . mysqli_error($conn));
@@ -81,7 +97,7 @@
                                 if (empty($Productimage)) {
                                     echo "<div class='error'>Image not Added.</div>";
                                 } else {
-                                    echo '<img src="' . $Productimage . '" alt="Productimage" width="100" height="100"><br>';
+                                    //echo '<img src="' . $Productimage . '" alt="Productimage" width="100" height="100"><br>';
                                     echo '<img src="images/' . $Productimage . '" alt="Productimage" width="100" height="100"><br>';
 
                                 }

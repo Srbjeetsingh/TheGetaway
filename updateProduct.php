@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Handle image update
 $newImageUploaded = false;
-$targetDir = "images/";
+$targetDir = "/";
 
 if (isset($_FILES["Productimage"]) && $_FILES["Productimage"]["error"] == UPLOAD_ERR_OK) {
     $targetFile = $targetDir . basename($_FILES["Productimage"]["name"]);

@@ -1,12 +1,24 @@
 <?php
+<<<<<<< Updated upstream
 if(isset($_POST["submit1"])) {
     if(isset($_POST['CUsername']) && isset($_POST['CPassword']) && isset($_POST['CEmail']) && isset($_POST['CC_Number'])) {
+=======
+
+if (isset($_POST["submit1"])) {
+    if (isset($_POST['CUsername']) && isset($_POST['CPassword']) && isset($_POST['CEmail']) && isset($_POST['CC_Number']) && isset($_POST['CAge'])) {
+>>>>>>> Stashed changes
         $username = $_POST['CUsername'];
         $password = $_POST['CPassword'];
         $email = $_POST['CEmail'];
         $contact = $_POST['CC_Number'];
+<<<<<<< Updated upstream
 
         $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product'); 
+=======
+        $age = $_POST['CAge'];
+
+        $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product');
+>>>>>>> Stashed changes
 
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
@@ -14,6 +26,7 @@ if(isset($_POST["submit1"])) {
 
         $DupeCheck = "SELECT * FROM tbl_customer WHERE CUsername='$username' OR CPassword='$password' OR CEmail='$email'";
         $DupeResult = $conn->query($DupeCheck);
+<<<<<<< Updated upstream
         if ($DupeResult->num_rows > 0) {
             echo "<script>alert('You have entered your Username, Email or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
         } else {
@@ -29,6 +42,23 @@ if(isset($_POST["submit1"])) {
                 } else {
                 echo "Insertion failed: " . mysqli_error($conn);
                 }
+=======
+
+        if ($DupeResult->num_rows > 0) {
+            echo "<script>alert('You have entered your Username, Email, or Contact information similarly to someone that has been registered previously. Please re-enter your info or log in.');</script>";
+        } else {
+            $sql = "INSERT INTO tbl_customer (CUsername, CPassword, CEmail, CC_Number, CAge)
+            VALUES ('$username', '$password', '$email', '$contact', '$age')";
+            $res = mysqli_query($conn, $sql);
+
+            if ($res === TRUE) {
+                echo "Database updated";
+                header("Location: TheGetawayLogin.php");
+                exit();
+            } else {
+                echo "Insertion failed: " . mysqli_error($conn);
+            }
+>>>>>>> Stashed changes
         }
 
         mysqli_close($conn);
@@ -47,7 +77,11 @@ if (isset($_POST["submit"])) {
         $License = $_POST['License'];
         $Testimonials = $_POST['Testimonials'];
         $FileDesc = $_POST['FileDesc'];
+<<<<<<< Updated upstream
         $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product'); 
+=======
+        $conn = mysqli_connect('localhost', 'root', '', 'getaway'); 
+>>>>>>> Stashed changes
 
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
@@ -94,7 +128,11 @@ if (isset($_POST["submit"])) {
     <header>
         <h1>Login/Registration</h1>
         <div class="category-buttons">
+<<<<<<< Updated upstream
             <a href="Homepage.html">Homepage</a>
+=======
+            <a href="Home.php">Homepage</a>
+>>>>>>> Stashed changes
         </div>
     </header>
     <div class="container">
@@ -104,6 +142,7 @@ if (isset($_POST["submit"])) {
                 <h1 class="text-white mb-4">Merchant Registration</h1>
                 <div class="form-floating">
                     <label for="name">Full Name</label>
+<<<<<<< Updated upstream
                     <input type="text" class="form-control bg-transparent" id="MUsername" name = "MUsername" placeholder="Your Full Name">
                 </div>
                 <div class="form-floating">
@@ -121,6 +160,25 @@ if (isset($_POST["submit"])) {
                 <div class="form-floating">
                     <label for="phone">File Title</label>
                     <input type="text" class="form-control bg-transparent" id="FileTitle" name ="FileTitle" placeholder="Your File Title">
+=======
+                    <input type="text" class="form-control bg-transparent" id="MUsername" name = "MUsername" placeholder="Username" required>
+                </div>
+                <div class="form-floating">
+                    <label for="email">Your Email</label>
+                    <input type="email" class="form-control bg-transparent" id="MEmail" name ="MEmail" placeholder="Your Email" required>
+                </div>
+                <div class="form-floating">
+                    <label for="phone">Your Contact info</label>
+                    <input type="text" class="form-control bg-transparent" id="MCNumber" name ="MCNumber" placeholder="Your Phone Number" required>
+                </div>
+                <div class="form-floating">
+                    <label for="message">Brief Company description</label>
+                    <textarea class="form-control bg-transparent" placeholder="Brief Company description" id="Comp_Desc" name ="Comp_Desc" style="height: 100px" required></textarea>
+                </div>
+                <div class="form-floating">
+                    <label for="phone">File Title</label>
+                    <input type="text" class="form-control bg-transparent" id="FileTitle" name ="FileTitle" placeholder="Your File Title" required>
+>>>>>>> Stashed changes
                 </div>
                 <div class="form-floating">
                     <label for="avatar">Upload Licenses</label>
@@ -132,7 +190,11 @@ if (isset($_POST["submit"])) {
                 </div>
                 <div class="form-floating">
                     <label for="message">File Description</label>
+<<<<<<< Updated upstream
                     <textarea class="form-control bg-transparent" placeholder="File Description" id="FileDesc" name ="FileDesc" style="height: 100px"></textarea>
+=======
+                    <textarea class="form-control bg-transparent" placeholder="File Description" id="FileDesc" name ="FileDesc" style="height: 100px" required></textarea>
+>>>>>>> Stashed changes
                 </div>
                 <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit">Register</button>
                 <p class="text-center mt-3">
@@ -145,6 +207,7 @@ if (isset($_POST["submit"])) {
                 <h1 class="text-white mb-4">Customer Registration</h1>
                 <div class="form-floating">
                     <label for="customer-username">Username</label>
+<<<<<<< Updated upstream
                     <input type="text" class="form-control bg-transparent" id="CUsername" name="CUsername" placeholder="Username">
                 </div>
                 <div class="form-floating">
@@ -158,6 +221,30 @@ if (isset($_POST["submit"])) {
                 <div class="form-floating">
                     <label for="customer-contact-number">Contact Number</label>
                     <input type="text" class="form-control bg-transparent" id="CC_Number" name="CC_Number" placeholder="Contact Number">
+=======
+                    <input type="text" class="form-control bg-transparent" id="CUsername" name="CUsername" placeholder="Username" required>
+                </div>
+                <div class="form-floating">
+                    <label for="customer-email">Email</label>
+                    <input type="email" class="form-control bg-transparent" id="CEmail" name="CEmail" placeholder="Your Email" required>
+                </div>
+                <div class="form-floating">
+                    <label for="customer-age">Age Range</label>
+                    <select class="form-control bg-transparent" id="CAge" name="CAge" required>
+                        <option value="16-20">16-20</option>
+                        <option value="20-25">20-25</option>
+                        <option value="25-30">25-30</option>
+                        <option value="30+">30+</option>
+                    </select>
+                </div>
+                <div class="form-floating">
+                    <label for="customer-password">Password</label>
+                    <input type="password" class="form-control bg-transparent" id="CPassword" name="CPassword" placeholder="Password" required>
+                </div>
+                <div class="form-floating">
+                    <label for="customer-contact-number">Contact Number</label>
+                    <input type="text" class="form-control bg-transparent" id="CC_Number" name="CC_Number" placeholder="Contact Number" required>
+>>>>>>> Stashed changes
                 </div>
                 <button class="btn btn-outline-light w-100 py-3" type="submit" name="submit1">Register</button>
                 <p class="text-center mt-3">

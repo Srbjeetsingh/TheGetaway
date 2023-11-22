@@ -24,7 +24,7 @@
         <tr>
             <td>Productimage:</td>
             <td><label for="product-image">Productimage</label></td>
-            <td><input type="file" id="Productimage" accept=".png" name="Productimage"> </td>
+            <td><input type="file" id="Productimage" accept=".png" name="Productimage" required ></td>
         </tr>
         <tr>
             <td>Product Name</td>
@@ -37,7 +37,7 @@
             </td>
         </tr>
         <tr>
-            <td>Product Cost</td>
+            <td>Product Cost($)</td>
             <td><input type="number" id="ProductCost" name="ProductCost" required></td>
         </tr>
         <tr>

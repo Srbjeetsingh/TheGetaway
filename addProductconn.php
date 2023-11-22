@@ -1,39 +1,34 @@
 <?php
+session_start();
+    $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product');
 
-    $conn = mysqli_connect('localhost', 'root', '', 'manage_tourism_product'); 
-
-   
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    //$Productimage = $_POST['Productimage'];
+
+    // Get the merchant's ID (you should replace '123' with the actual ID source)
+    $merchantID = $_SESSION['merchant_id'];
+
     $ProductName = $_POST['ProductName'];
     $ProductDescription = $_POST['ProductDescription'];
     $ProductCost = $_POST['ProductCost'];
     $ProductQuantity = $_POST['ProductQuantity'];
-  
-    
-   
+
     $Productimage = $_FILES['Productimage']['name'];
     $Productimage2 = $_FILES['Productimage']['tmp_name'];
-    $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/'; 
-    
-    
+    $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/';
+
     move_uploaded_file($Productimage2, $uploadDir . $Productimage);
-    
-    
-    $sql = "INSERT INTO tbl_product (Productimage, ProductName, ProductDescription, ProductCost, ProductQuantity)
-                    VALUES ('$Productimage', '$ProductName', '$ProductDescription', '$ProductCost', '$ProductQuantity')";
-    
-    
+
+    // Insert the product into the table with the merchant's ID
+    $sql = "INSERT INTO tbl_product (Productimage, ProductName, ProductDescription, ProductCost, ProductQuantity, fk_merchantID)
+            VALUES ('$Productimage', '$ProductName', '$ProductDescription', '$ProductCost', '$ProductQuantity', $merchantID)";
+
     if ($conn->query($sql) === TRUE) {
-        echo "New record succesfully!";
+        echo "New record successfully added!";
     } else {
-        echo "Error is--> " . $sql . "<br>" . $conn->error;
+        echo "Error is --> " . $sql . "<br>" . $conn->error;
     }
-   $conn->close();
-  
 
-
-
+    $conn->close();
 ?>
