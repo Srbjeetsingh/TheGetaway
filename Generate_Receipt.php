@@ -28,20 +28,31 @@ if ($productID !== null) {
             $row = $result->fetch_assoc();
 
             // Get the customer ID from tbl_product (assuming there is a CustID column)
-            $customerID = $row['CustID'];
+            $CustID = isset($row['CustomerID']) ? htmlspecialchars($row['CustomerID']) : 'Unknown Customer';
 
-            // Get the customer name (CName) from tbl_customer using the customer ID
-            $customerName = getCustomerName($customerID, $conn);
+            // Get the customer name (CUsername) from tbl_customer using the customer ID
+            $customerName = getCustomerName($CustID, $conn);
+
+            // Use form submission data for quantity and total cost
+            $quantity = isset($_GET['quantity']) ? $_GET['quantity'] : 'N/A';
+            $totalCost = isset($_GET['total_cost']) ? $_GET['total_cost'] : 'N/A';
+
+            // Get the purchase date
+            $purchaseDate = isset($_GET['purchase_date']) ? $_GET['purchase_date'] : date("Y-m-d H:i:s");
+
+            // Get the current date and time
+            $receiptDateTime = date("Y-m-d H:i:s");
 
             // Create the receipt content
-            $receiptContent = "Receipt Date: " . date("Y-m-d H:i:s") . "\n";
+            $receiptContent = "Receipt Date and Time: " . $receiptDateTime . "\n";
+            $receiptContent .= "Purchase Date: " . $purchaseDate . "\n";
             $receiptContent .= "Product Name: " . $row['ProductName'] . "\n";
             $receiptContent .= "Customer Name: " . $customerName . "\n";
-            $receiptContent .= "Product Cost: RM " . $row['ProductCost'] . "\n";
-            $receiptContent .= "Quantity: " . $row['ProductQuantity'] . "\n";
-            $receiptContent .= "Total: RM " . ($row['ProductCost'] * $row['ProductQuantity']) . "\n";
+            $receiptContent .= "Product Cost: RM " . $row['ProductAmount'] . "\n";
+            $receiptContent .= "Quantity: " . $quantity . "\n";
+            $receiptContent .= "Total Cost: RM " . $totalCost . "\n"; // Include total cost in the receipt
             $receiptContent .= "Payment Method: " . $paymentMethod . "\n"; // Add this line to display the payment method
-
+            
             // Include a reference to the product image in the receipt
             $receiptContent .= "Product Image: " . $row['ProductImage'];
 
@@ -49,8 +60,35 @@ if ($productID !== null) {
             header("Content-Type: text/plain");
             header("Content-Disposition: attachment; filename=Receipt.txt");
 
-            // Output the receipt content
-            echo $receiptContent;
+            // Save the content to a file
+            $filename = "Receipt.txt";
+            file_put_contents($filename, $receiptContent);
+
+            // Output the file
+            readfile($filename);
+
+            // Insert into tbl_receipt using prepared statement
+$insertSql = "INSERT INTO tbl_receipt (ProductID, ProductName, ProductCost, Quantity, PaymentMethod, PurchaseDate, CustomerID)
+VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($insertSql);
+
+// Check if the statement was prepared successfully
+if ($stmt === false) {
+    die("Error in prepare(): " . $conn->error);
+}
+
+// Bind parameters
+$stmt->bind_param("sssssss", $productID, $row['ProductName'], $row['ProductAmount'], $quantity, $paymentMethod, $purchaseDate, $CustID);
+
+// Execute the statement
+if (!$stmt->execute()) {
+    echo "Error updating tbl_receipt: " . $stmt->error;
+}
+
+// Close the statement
+$stmt->close();
+
         } else {
             echo "Product not found.";
         }
@@ -65,12 +103,12 @@ if ($productID !== null) {
 }
 
 // Function to get customer name from tbl_customer
-function getCustomerName($customerID, $conn) {
-    $sql = "SELECT CName FROM tbl_customer WHERE CustID = $customerID";
+function getCustomerName($CustomerID, $conn) {
+    $sql = "SELECT CUsername FROM tbl_customer WHERE CustomerID = $CustomerID";
     $result = $conn->query($sql);
-    if ($result) {
+    if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        return $row['CName'];
+        return $row['CUsername'];
     } else {
         return "Unknown Customer";
     }
