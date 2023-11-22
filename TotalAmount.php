@@ -1,158 +1,193 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-         body {
-            background-color: #d6d1f0; /* Change this to your preferred background color */
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
         }
+
         .header {
             text-align: center;
-            background-color: #333; /* Add your desired background color */
-            color: white; /* Add your desired text color */
-            padding: 20px; /* Add padding to create space around the content */
+            background-color: #333;
+            color: white;
+            padding: 20px;
         }
+
         .header h1 {
             margin: 0;
             padding: 0;
         }
+
         .menu-link {
             text-align: center;
-            background-color: black; /* Add your desired background color for the menu link */
-            padding: 10px; /* Adjust padding as needed */
+            background-color: black;
+            padding: 12px;
         }
+
         .menu-link a {
-            color: white; /* Change the color of the menu link text to red */
-            text-decoration: none; /* Remove underlines from the link */
-            padding: 10px 20px; /* Add padding to the link (top and bottom, left and right) */
-            margin: 5px; /* Add margin to create space around the link */
-        }
-        .container {
-            justify-content: center;
-            align-items: center;
-            height: 70vh; /* 100% of the viewport height */
-            margin: 0px;
-        }
-
-        /* Styling for product boxes */
-        .product-box {
-            text-align: left; /* Align text to the left */
-            padding: 18px; /* Increase the padding for spacing */
-            border: 2px solid #000; /* Border for visibility */
-            display: flex; /* Use flexbox to align items */
-            width: 659px; /* Set your desired width for a little more length */
-            height: 130px; /* Set your desired height */
-        }
-
-        /* Styling for product images */
-        .product-image {
-            max-width: 150px; /* Adjust the max width for the image */
-            max-height: 100px; /* Adjust the max height for the image */
-            padding: 10px;        
-        }
-
-        /* Styling for product details (items) */
-        .product-details {
-            flex-grow: 1;
-            padding: 10px; /* Add spacing to separate image and details */
-        }
-        .receipt-button {
-            padding: 26px; /* Add padding to create space around the button */
-        }
-        .social-links {
+            color: white;
             text-decoration: none;
-            color: #fff;
-            margin: 10px;
-            padding: 10px 10px; /* Add padding to the link (top and bottom, left and right) */
+            padding: 10px 10px;
+            margin: 8px;
         }
+
+        .table-container {
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .product-image {
+            max-width: 150px;
+            max-height: 85px;
+            padding: 15px;
+        }
+
+        .generate-receipt-button {
+            padding: 10px;
+            background-color: white;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
         .footer {
-            clear: both; /* Clear floating elements (product boxes) */
-            color: #fff;
             text-align: center;
-            background-color: black; /* Add your desired background color for the menu link */
-            padding: 1px; /* Adjust padding as needed */
+            background-color: #333;
+            color: white;
+            margin-top: 320px;
+            padding: 3px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
         }
     </style>
 </head>
 <body>
-<div class="header">
+    <div class="header">
         <h1>Customer Dashboard</h1>
     </div>
 
     <div class="menu-link">
         <a href="ProductList.php">Back</a>
-        <a href="Login.php">Log out</a>
+        <a href="TheGetAwayLogin.php">Log out</a>
     </div>
-    <div class="container">
+
+    <div class="table-container">
+        <form method="POST" action="Generate_Receipt.php"> <!-- Update the action attribute here -->
         <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Description</th>
+                    <th>Product Cost</th>
+                    <th>Product Image</th>
+                    <th>Quantity</th>
+                    <th>Payment Type</th>
+                    <th>Purchase Date</th>
+                    <th>Total Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
-            // Database connection and query here
-            $servername = "localhost:3310";
-            $username = "root";
-            $password = "";
-            $dbname = "manage_tourism_product";
+                    // Start the session
+                    session_start();
 
-            // Create a connection to the database
-            $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check if the customer is logged in
+                    if (isset($_SESSION['CustomerID'])) {
+                        // Retrieve the customer ID from the session
+                        $selectedCustomerID = $_SESSION['CustomerID'];
 
-            // Check the connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+                        // Your database connection code here
+                        $conn = mysqli_connect('localhost:3310', 'root', '', 'manage_tourism_product');
 
-            // Query to fetch product data
-            $sql = "SELECT * FROM tbl_product";
-            $result = $conn->query($sql);
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
 
-            if ($result->num_rows > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td> Product ID: " . $row["ProductID"] . "<br>"
-                       . " Product Name: " . $row["ProductName"] . "<br>"
-                       . " Product Desc: " . $row["ProductDescription"] . "<br>"
-                       . " Product Cost: RM " . $row["ProductCost"] . "<br>"
-                       . " Quantity: " . $row["ProductQuantity"] . "<br>";
-                    
-                    // Calculate the total cost by multiplying ProductCost and ProductQuantity
-                    $totalCost = $row["ProductCost"] * $row["ProductQuantity"];
-                    echo " Total Cost: RM " . $totalCost . "<br>";
-                    echo "<br>";
-                    echo "</td>";
+                        // Check if form is submitted
+                        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
+                            // Retrieve submitted data
+                            $selectedProductID = $_POST['ProductID'];
+                            $selectedProductName = $_POST['ProductName'];
+                            $selectedProductDescription = $_POST['ProductDescription'];
+                            $selectedProductAmount = $_POST['ProductAmount'];
+                            $selectedProductImage = $_POST['ProductImage'];
+                            $selectedQuantities = $_POST['quantity'];
+                            $paymentTypes = $_POST['PaymentType'];
+                            $purchaseDates = $_POST['PurchaseDate'];
 
-                    echo "<td><img src='/B1801936/" . $row["ProductImage"] . "' width='150' height='100' /></td>";
-                    echo "<td>";
-                    echo  "<br>";
-                
-                    // Find the index of the current ProductID in the ProductID array
-                    $index = array_search($row["ProductID"], $_POST['ProductID']);
-                
-                    if ($index !== false) {
-                        $paymentMethod = $_POST['PaymentMethod'][$index];
-                        echo "Payment Method: $paymentMethod<br>";
-                        
-                        // Generate Receipt button
-                        echo "<div class='receipt-button'><a href='Generate_Receipt.php?product_id={$row['ProductID']}&payment_method=$paymentMethod' target='_blank'>Generate Receipt</a></div>";
+                            // Display the submitted data for each selected product
+                            for ($i = 0; $i < count($selectedProductID); $i++) {
+                                // Calculate and format total cost
+                                $totalCost = $selectedQuantities[$i] * $selectedProductAmount[$i];
+                                $formattedTotalCost = number_format($totalCost, 2); // Format as currency
+
+                                // Display the product details and total cost
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($selectedProductID[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($selectedProductName[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($selectedProductDescription[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($selectedProductAmount[$i] ?? '') . "</td>";
+                                echo "<td><img src='images/" . htmlspecialchars($selectedProductImage[$i] ?? '') . "' alt='' width='100' height='100'></td>";
+                                echo "<td>" . htmlspecialchars($selectedQuantities[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($paymentTypes[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($purchaseDates[$i] ?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($formattedTotalCost ?? '') . "</td>";
+                                echo "<td><div class='generate-receipt-button'><a href='Generate_Receipt.php?product_id={$selectedProductID[$i]}&payment_method=" . urlencode($paymentTypes[$i]) . "&CustomerID=" . urlencode($selectedCustomerID) . "&quantity=" . urlencode($selectedQuantities[$i]) . "&total_cost=" . urlencode($totalCost) . "&purchase_date=" . urlencode($purchaseDates[$i]) . "' download>Generate Receipt</a></div></td>";
+                                echo "</tr>";
+
+                                // Perform the SQL update
+                                $sql = "INSERT INTO tbl_payment (PaymentType, ProductAmount, CustomerID, ProductID, PurchaseDate) 
+                                        VALUES ('$paymentTypes[$i]', '$selectedProductAmount[$i]', '$selectedCustomerID', '$selectedProductID[$i]', '$purchaseDates[$i]')";
+
+                                // Execute the SQL query
+                                if (mysqli_query($conn, $sql)) {
+                                    echo "Record inserted successfully";
+                                } else {
+                                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                                }
+                            }
+                        } else {
+                            echo "<tr><td colspan='10'>No products found</td></tr>";
+                        }
                     }
-                
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                } 
-                 else {
-                echo "<tr><td colspan='5'>No products found</td></tr>";
-            }
-
-            // Close the database connection
-            $conn->close();
-            ?>
-        </table>
-        <footer class="footer">
-        <div class="social-links">
-            <a href="https://www.facebook.com">Facebook</a>
-            <a href="https://twitter.com">Twitter</a>
-            <a href="https://www.instagram.com">Instagram</a>
-        </div>
-    </footer>
-</div>
-    </div>
-</body>
-</html>
+                        // Close the database connection
+                        mysqli_close($conn);
+                    ?>
+                      </tbody>
+                  </table>
+              </div>
+          
+              <footer class="footer">
+                  <p>&copy; 2023 TheGetAway</p>
+                  <a href="#">Facebook</a>
+                  <a href="#">Twitter</a>
+                  <a href="#">Instagram</a>
+              </footer>
+          </body>
+          </html>
